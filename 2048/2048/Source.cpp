@@ -34,6 +34,7 @@ public:
 		int free = howmanyfree();
 		if (free == 0)
 		{
+			// i should check if there are adjacent elements that can be merged together
 			gameover = true;
 			cout << "Game over!" << endl;
 		}
@@ -94,15 +95,145 @@ public:
 		else if (c == 'W')
 			up();
 		else if (c == 'A')
-			;
+			left();
 		else if (c == 'S')
-			;
+			down();
 		else
-			;
+			right();
+	}
+
+	void right()
+	{
+		
+
+		for (int j = 0; j < 4; j++)
+		{
+			for (int i = 0; i < 3; i++)
+			{
+				if (values[15 - (i + j * 4)] == 0)
+				{
+					int x = 1;
+					int temp = values[15 - (i + j * 4 + x)];
+					while (x + i < 3 && temp == 0)
+					{
+						x++;
+
+						temp = values[15 - (i + j * 4 + x)];
+					}
+					values[15 - (i + j * 4)] = values[15 - (i + j * 4 + x)];
+					values[15 - (i + j * 4 + x)] = 0;
+				}
+			}
+		}
+		for (int j = 0; j < 4; j++)
+		{
+			for (int i = 0; i < 3; i++)
+			{
+				if (values[15 - (i + j * 4)] != 0 && values[15 - (i + j * 4 + 1)] == values[15 - (i + j * 4)])
+				{
+					values[15 - (i + j * 4)] = values[15 - (i + j * 4)] * 2;
+					values[15 - (i + j * 4 + 1)] = 0;
+				}
+			}
+		}
+		for (int j = 0; j < 4; j++)
+		{
+			for (int i = 0; i < 3; i++)
+			{
+				if (values[15 - (i + j * 4)] == 0)
+				{
+					int x = 1;
+					int temp = values[15 - (i + j * 4 + x)];
+					while (x + i < 3 && temp == 0)
+					{
+						x++;
+
+						temp = values[15 - (i + j * 4 + x)];
+					}
+					values[15 - (i + j * 4)] = values[15 - (i + j * 4 + x)];
+					values[15 - (i + j * 4 + x)] = 0;
+				}
+			}
+		}
+	}
+	void left()
+	{
+		
+		for (int j = 0; j < 4; j++)
+		{
+			for (int i = 0; i < 3; i++)
+			{
+				if (values[i + j * 4] == 0)
+				{
+					int x = 1;
+					int temp = values[i + j * 4 + x];
+					while (x + i < 3 && temp == 0)
+					{
+						x++;
+
+						temp = values[i + j * 4 + x ];
+					}
+					values[i + j * 4] = values[i + j * 4 + x];
+					values[i + j * 4 + x] = 0;
+				}
+			}
+		}
+		for (int j = 0; j < 4; j++)
+		{
+			for (int i = 0; i < 3; i++)
+			{
+				if (values[i + j * 4] != 0 && values[i + j * 4 + 1] == values[i + j * 4])
+				{
+					values[i + j * 4] = values[i + j * 4] * 2;
+					values[i + j * 4 + 1] = 0;
+				}
+			}
+		}
+		for (int j = 0; j < 4; j++)
+		{
+			for (int i = 0; i < 3; i++)
+			{
+				if (values[i + j * 4] == 0)
+				{
+					int x = 1;
+					int temp = values[i + j * 4 + x];
+					while (x + i < 3 && temp == 0)
+					{
+						x++;
+
+						temp = values[i + j * 4 + x];
+					}
+					values[i + j * 4] = values[i + j * 4 + x];
+					values[i + j * 4 + x] = 0;
+				}
+			}
+		}
+
 	}
 
 	void up()
 	{
+		
+
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				if (values[i + j * 4] == 0)
+				{
+					int x = 1;
+					int temp = values[i + j * 4+x*4];
+					while (x + j < 3 && temp == 0)
+					{
+						x++;
+						
+						temp = values[i + j * 4 + x*4];
+					}
+					values[i + j * 4] = values[i + j * 4 + x*4];
+					values[i + j * 4 + x*4] = 0;
+				}
+			}
+		}
 		for (int i = 0; i < 4; i++)
 		{
 			for (int j = 0; j < 3; j++)
@@ -114,7 +245,6 @@ public:
 				}
 			}
 		}
-
 		for (int i = 0; i < 4; i++)
 		{
 			for (int j = 0; j < 3; j++)
@@ -122,14 +252,68 @@ public:
 				if (values[i + j * 4] == 0)
 				{
 					int x = 1;
-					int temp = values[i + j * 4+x];
-					while (x + j < 3 && temp != 0)
+					int temp = values[i + j * 4 + x * 4];
+					while (x + j < 3 && temp == 0)
 					{
-						temp = values[i + j * 4 + x];
 						x++;
+
+						temp = values[i + j * 4 + x * 4];
 					}
-					values[i + j * 4] = values[i + j * 4 + x];
-					values[i + j * 4 + x] = 0;
+					values[i + j * 4] = values[i + j * 4 + x * 4];
+					values[i + j * 4 + x * 4] = 0;
+				}
+			}
+		}
+	}
+	void down()
+	{
+		
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				if (values[15 - (i + j * 4)] == 0)
+				{
+					int x = 1;
+					int temp = values[15 - (i + j * 4 + x * 4)];
+					while (x + j < 3 && temp == 0)
+					{
+						x++;
+
+						temp = values[15 - (i + j * 4 + x * 4)];
+					}
+					values[15 - (i + j * 4)] = values[15 - (i + j * 4 + x * 4)];
+					values[15 - (i + j * 4 + x * 4)] = 0;
+				}
+			}
+		}
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				if (values[15 - (i + j * 4)] != 0 && values[15 - (i + j * 4 + 4)] == values[15 - (i + j * 4)])
+				{
+					values[15 - (i + j * 4)] = values[15 - (i + j * 4)] * 2;
+					values[15 - (i + j * 4 + 4)] = 0;
+				}
+			}
+		}
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				if (values[15 - (i + j * 4)] == 0)
+				{
+					int x = 1;
+					int temp = values[15 - (i + j * 4 + x * 4)];
+					while (x + j < 3 && temp == 0)
+					{
+						x++;
+
+						temp = values[15 - (i + j * 4 + x * 4)];
+					}
+					values[15 - (i + j * 4)] = values[15 - (i + j * 4 + x * 4)];
+					values[15 - (i + j * 4 + x * 4)] = 0;
 				}
 			}
 		}
