@@ -34,17 +34,22 @@ public:
 	}
 	void logiccheck()
 	{
-		int nofsame = 0;
-		for (int i = 0; i < 16; i++)
-			if (values[i] == lastterm[i])
-				nofsame++;
 		int free = howmanyfree();
-		if (free == 0&& nofsame==16)
+		if (free == 0)
 		{
-			// i should check if there are adjacent elements that can be merged together
-			gameover = true;
-			display();
-			cout << "Game over!" << endl;
+			vector<int> temp = values;
+			up(); down(); left(); right();
+			int nofsame = 0;
+			for (int i = 0; i < 16; i++)
+			{
+				if (values[i] == temp[i])
+					nofsame++;
+			}
+			if (nofsame == 16)
+			{
+				gameover = true;
+			}
+
 		}
 	}
 	void display()
@@ -388,7 +393,10 @@ public:
 			readInput(c);
 			logiccheck();
 			if (gameover)
-				;
+			{
+				display();
+				cout << "Game over!" << endl;
+			}
 			else
 				system("CLS");
 		}
