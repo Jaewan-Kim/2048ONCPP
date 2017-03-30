@@ -8,6 +8,7 @@ class game
 {
 	bool gameover;
 	vector<int> values;
+	vector<int> lastterm;
 
 public:
 	game() :gameover(false)
@@ -28,14 +29,21 @@ public:
 		values.push_back(0);
 		values.push_back(0);
 		values.push_back(0);
+		lastterm = values;
+		addNew();
 	}
 	void logiccheck()
 	{
+		int nofsame = 0;
+		for (int i = 0; i < 16; i++)
+			if (values[i] == lastterm[i])
+				nofsame++;
 		int free = howmanyfree();
-		if (free == 0)
+		if (free == 0&& nofsame==16)
 		{
 			// i should check if there are adjacent elements that can be merged together
 			gameover = true;
+			display();
 			cout << "Game over!" << endl;
 		}
 	}
@@ -104,7 +112,7 @@ public:
 
 	void right()
 	{
-		
+		lastterm = values;
 
 		for (int j = 0; j < 4; j++)
 		{
@@ -155,10 +163,23 @@ public:
 				}
 			}
 		}
+		int nofsame = 0;
+		for (int i = 0; i < 16; i++)
+		{
+			if (values[i] == lastterm[i])
+				nofsame++;
+		}
+		if (nofsame == 16)
+			;
+		else
+			addNew();
+		
+		
+			
 	}
 	void left()
 	{
-		
+		lastterm = values;
 		for (int j = 0; j < 4; j++)
 		{
 			for (int i = 0; i < 3; i++)
@@ -208,13 +229,21 @@ public:
 				}
 			}
 		}
-
+		int nofsame = 0;
+		for (int i = 0; i < 16; i++)
+		{
+			if (values[i] == lastterm[i])
+				nofsame++;
+		}
+		if (nofsame == 16)
+			;
+		else
+			addNew();
+		
 	}
-
 	void up()
 	{
-		
-
+		lastterm = values;
 		for (int i = 0; i < 4; i++)
 		{
 			for (int j = 0; j < 3; j++)
@@ -264,10 +293,21 @@ public:
 				}
 			}
 		}
+		
+		int nofsame = 0;
+		for (int i = 0; i < 16; i++)
+		{
+			if (values[i] == lastterm[i])
+				nofsame++;
+		}
+		if (nofsame == 16)
+			;
+		else
+			addNew();
 	}
 	void down()
 	{
-		
+		lastterm = values;
 		for (int i = 0; i < 4; i++)
 		{
 			for (int j = 0; j < 3; j++)
@@ -317,14 +357,22 @@ public:
 				}
 			}
 		}
+		int nofsame = 0;
+		for (int i = 0; i < 16; i++)
+		{
+			if (values[i] == lastterm[i])
+				nofsame++;
+		}
+		if (nofsame == 16)
+			;
+		else
+			addNew();
 	}
 	void begin()
 	{
 		while (!gameover)
 		{
-			addNew();
 			display();
-			logiccheck();
 			if (gameover)
 				break;
 			char c;
@@ -339,7 +387,10 @@ public:
 			}
 			readInput(c);
 			logiccheck();
-			system("CLS");
+			if (gameover)
+				;
+			else
+				system("CLS");
 		}
 	}
 
